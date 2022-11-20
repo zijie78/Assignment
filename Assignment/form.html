@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+    <link rel="icon"href="image/logo.png">
+    <style>
+                .mainbox {
+            border: 2px solid lightgray;
+            background-color: white;
+            height: 1450px;
+            padding: 30px;
+            opacity: 0.8;}
+            hr {
+                background-color:black;
+            }
+    </style>
+</head>
+<body style = "background-color: #FFE1E1; padding:20px">
+    <div class="mainbox">
+        <h1 style="text-align:center;">Order Form</h1>
+        <form>
+            Name:
+            <input type="text"name="name" required>
+            <br>
+            <br>
+            Contact No.:
+            <input type="text"name="number" required>
+            <br>
+            <br>
+            Address:
+            <input type="text"name="address" required>
+            <br>
+            <br>
+            Postal Code:
+            <input type="text"name="postal" required>
+            <br>
+            <br>
+            Email:
+            <input type="email"name="email" required>
+            <br>
+            <br>
+            Items:
+            <br>
+            Item 1
+             <select required>
+                <option value="CK">CK</option>
+                <option value="RT">RT</option>
+                <option value="MC">MC</option>
+                <option value="MK">MK</option>
+            </select>
+            <select>
+                <option value="001">001</option>
+                <option value="002">002</option>
+                <option value="003">003</option>
+                <option value="004">004</option>
+            </select>
+            Quantity: 
+            <input type="number" name="number" min= "1" required>
+            <br>
+            Item 2
+             <select>
+                <option value="CK">CK</option>
+                <option value="RT">RT</option>
+                <option value="MC">MC</option>
+                <option value="MK">MK</option>
+            </select>
+            <select>
+                <option value="001">001</option>
+                <option value="002">002</option>
+                <option value="003">003</option>
+                <option value="004">004</option>
+            </select>
+            Quantity: 
+            <input type="number" name="number" min= "1" required>
+            <br>
+            Item 3
+             <select>
+                <option value="CK">CK</option>
+                <option value="RT">RT</option>
+                <option value="MC">MC</option>
+                <option value="MK">MK</option>
+            </select>
+            <select>
+                <option value="001">001</option>
+                <option value="002">002</option>
+                <option value="003">003</option>
+                <option value="004">004</option>
+            </select>
+            Quantity: 
+            <input type="number" name="number" min= "1" required>
+            <br>
+            <br>
+            Additional Informations:
+            <br>
+            <textarea cols = "50" rows="10" name="additional"> </textarea>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <hr>
+            <h1 style="text-align:center">Summary</h1>
+            <br>
+            <br>
+            <br>
+            <textarea cols = "75" rows="35" name="summary" readonly> </textarea>
+            <br>
+            <br>
+            Enter Promo Code:
+            <input type="text" name="promocode">
+            <br>
+            <br>
+            <br>
+            <input type="submit" value="Check Out">
+            <input type="reset" value="Clear Form">
+            </form>
+    </div>
+    
+</body>
+</html>
