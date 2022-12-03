@@ -1,0 +1,28 @@
+.mainbox p, a{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+#thankYou{
+    font-family: Bell MT;
+    font-size: 100px;
+    text-align:center;
+}
+#returnP{
+    font-family: Bell MT;
+    font-size: 55px;
+    text-align:center;
+}
+#return {
+    color: #51B2E8;;
+    text-decoration: none;
+}
+#idMessage, #orderID{
+    font-family: Bell MT;
+    color:blue;
+    font-size: 50px;
+}

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+    <link rel="stylesheet" href="order.css">
+    <link rel="icon"href="image/logo.png">
+</head>
+<body style = "background-color: #FFE1E1; padding:20px" onLoad = "defaultLoad()">
+    <div class="mainbox">
+        <h1>Order Form</h1>
+        <form>
+            <text>Name:</text>
+			<br>
+            <input type="text"name="name" size = "64" id = "names" required><span id = "nameError"></span>
+            <br>
+            <br>
+            <text>Contact No:</text>
+			<br>
+            <input type="text"name="number" size = "64" id = "contactNo"required><span id = "contactError" ></span>
+            <br>
+            <br>
+            <text>Address:</text>
+			<br>
+            <input type="text"name="address" size = "64" id = "address"required><span id = "addressError" ></span>
+            <br>
+            <br>
+            <text>Postal Code:</text>
+			<br>
+            <input type="text"name="postal" size = "64" id = "postal"required> <span id = "postalError"></span>
+            <br>
+            <br>
+            <text>Email:</text>
+			<br>
+            <input type="email"name="email" size = "64" id = "email"required><span id = "emailError"></span>
+            <br>
+            <br>
+			<text>The number of Item types:</text>
+			<select id = "numOfType" onChange = "numOfTypeChange()">
+				<option value = "1" id = "selectedNum">1</option>
+				<option value = "2">2</option>
+				<option value = "3">3</option>
+			</select>
+			<br>
+			<br>
+            <text>Item 1</text>
+			<br>
+			<text>Item Code:</text>
+            <input type = "text" name="item" size = "10" id = "item1">
+			&nbsp;&nbsp;&nbsp;
+            <text>Quantity:</text>
+            <input type="number" name="number" value = "1" min= "1" id = "q1"><span id = "item1Error"></span>
+            <br>
+			<br>
+            <text>Item 2</text>
+			<br>
+			<text>Item Code:</text>
+            <input type = "text" name="item" size = "10" id = "item2" disabled = "true">
+			&nbsp;&nbsp;&nbsp;
+            <text>Quantity:</text>
+            <input type="number" name="number" min= "1" id = "q2" disabled = "true"><span id = "item2Error"></span>
+            <br>
+			<br>
+            <text>Item 3</text>
+			<br>
+			<text>Item Code:</text>
+            <input type = "text" name="item" size = "10" id = "item3" disabled = "true">
+			&nbsp;&nbsp;&nbsp;
+            <text>Quantity:</text> 
+            <input type="number" name="number" min= "1" id = "q3" disabled = "true"><span id = "item3Error"></span>
+            <br>
+            <br>
+			<br>
+            <text>Additional Informations:</text>
+            <br>
+            <textarea cols = "50" rows="10" name="additional" id = "additional"> </textarea>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <hr>
+            <h1>Summary</h1>
+            <br>
+            <br>
+            <textarea cols = "75" rows="35" name="summary" id = "summary" readonly> </textarea>
+            <br>
+            <br>
+            <text>Enter Promo Code:</text>
+            <input type="text" name="promocode" id = "promo" disabled = "true">
+			<input type = "button" id = "promobutton" value = "Check Code" disabled = "true"><span id = "promoError"></span>
+            <br>
+            <br>
+            <br>
+			<div class = "buttons">
+				<input type="button" value="Check Out" id = "checkOut">
+				&nbsp;&nbsp;&nbsp;
+				<input type="reset" value="Clear Form" id = "clearForm">		
+			</div>
+		</form>
+    </div>
+    <script>
+        	var CK001 = {name:"Kueh Lapis", code:"CK001", price:8};
+	var CK002 = {name:"Lapis Surabaya", code:"CK002", price:10};
+	var CK003 = {name:"Strawberry Birthday Cake", code:"CK003", price:28};
+	var CK004 = {name:"Cheese Cake Roll", code:"CK004", price:12};
+	
+	var RT001 = {name:"Chicken Burger", code:"RT001", price:6};
+	var RT002 = {name:"Beef Burger", code:"RT002", price:8};
+	var RT003 = {name:"Roti Kaya", code:"RT003", price:2};
+	var RT004 = {name:"Mexical Coffee Bun", code:"RT004", price:2.5};
+	
+	var MC001 = {name:"Matcha Filling", code:"MC001", price:36};
+	var MC002 = {name:"Chocholate Filling", code:"MC002", price:30};
+	var MC003 = {name:"Assorted Filling", code:"MC003", price:42};
+	var MC004 = {name:"Cheese Filling", code:"MC004", price:36};
+	
+	var MK001 = {name:"Red Bean Paste Mooncake", code:"MK001", price:8};
+	var MK002 = {name:"2 Yolk Mooncake", code:"MK002", price:10};
+	var MK003 = {name:"Pandan Mooncake", code:"MK003", price:12};
+	var MK004 = {name:"Snow Skin Mooncake", code:"MK004", price:9};
+	
+	var foods = [CK001, CK002, CK003, CK004, RT001, RT002, RT003, RT004, MC001, MC002, MC003, MC004, MK001, MK002, MK003, MK004];
+	var food_codes = [];
+	for(let i = 0; i < foods.length; i++){
+		food_codes.push(foods[i]["code"]);
+	};
+	
+	var promo_codes = ["GOODFOOD", "CHRISTMAS2022", "EASTER2022", "SHERLY2022"];
+	
+	const names = document.getElementById("names");
+	const nameError = document.getElementById("nameError");
+	const contact = document.getElementById("contactNo");
+	const contactError = document.getElementById("contactError");
+	const address = document.getElementById("address");
+	const addressError = document.getElementById("addressError");
+	const postal = document.getElementById("postal");
+	const postalError = document.getElementById("postalError");
+	const email = document.getElementById("email");
+	const emailError = document.getElementById("emailError");
+	const numOfType = document.getElementById("numOfType");
+	const item1 = document.getElementById("item1");
+	const q1 = document.getElementById("q1");
+	const item2 = document.getElementById("item2");
+	const q2 = document.getElementById("q2");
+	const item3 = document.getElementById("item3");
+	const q3 = document.getElementById("q3");
+	const item1Error = document.getElementById("item1Error");
+	const item2Error = document.getElementById("item2Error");
+	const item3Error = document.getElementById("item3Error");
+	const additional = document.getElementById("additional");
+	const summary = document.getElementById("summary");
+	const promo = document.getElementById("promo");
+	const promobutton = document.getElementById("promobutton");
+	const promoError = document.getElementById("promoError");
+	const checkOut = document.getElementById("checkOut");
+	const clearForm = document.getElementById("clearForm");
+	
+	var foodName1 = "";
+	var foodCode1 = "";
+	var foodPrice1 = 0;
+	var foodName2 = "";
+	var foodCode2 = "";
+	var foodPrice2 = 0;
+	var foodName3 = "";
+	var foodCode3 = "";
+	var foodPrice3 = 0;
+
+	var nameOk = false;
+	var contactOk = false;
+	var addressOk = false;
+	var postalOk = false;
+	var emailOk = false;
+	var item1Ok = false;
+	var item2Ok = true;
+	var item3Ok = true;
+	var promoOk = true;
+	
+	
+	
+	names.addEventListener("keyup", ()=>{
+		if(names.value.trim() == ""){
+			nameError.innerHTML = "Please enter your name";
+			nameOk = false;
+		}else if(!/(^[A-Za-z]+$)|(^[A-Za-z]+ [A-Za-z]+$)|(^[A-Za-z]+ [A-Za-z]+ [A-Za-z]+$)/.test(names.value.trim())){
+			nameError.innerHTML = "Please enter a valid name (3 Words, No numbers or special characters)";
+			nameOk = false;
+		}else{
+			nameError.innerHTML = "";
+			nameOk = true;
+		}
+	}
+	);
+	
+	contact.addEventListener("keyup", ()=>{
+		if(contact.value.trim() == ""){
+			contactError.innerHTML = "Please enter your contact number";
+			contactOk = false;
+		}else if(!/^[0-9]{8}$/.test(contact.value.trim())){
+			contactError.innerHTML = "Please enter a valid 8-digit contact number (without country code)"
+			contactOk = false;
+		}else{
+			contactError.innerHTML = "";
+			contactOk = true;
+		}
+	});
+	
+	address.addEventListener("keyup", ()=>{
+		if(address.value.trim() == ""){
+			addressError.innerHTML = "Please enter your address";
+			addressOk = false;
+		}else{
+			addressError.innerHTML = "";
+			addressOk = true;
+		}
+	});
+	
+	postal.addEventListener("keyup", ()=>{
+		if(postal.value.trim() == ""){
+			postalError.innerHTML = "Please enter your postal code";
+			postalOk = false;
+		}else if(!/^[0-9]{6}$/.test(postal.value.trim())){
+			postalError.innerHTML = "Please enter a valid postal code";
+			postalOk = false;
+		}else{
+			postalError.innerHTML = "";
+			postalOk = true;
+		}
+	});
+	
+	email.addEventListener("keyup", ()=>{
+		if(email.value.trim() == ""){
+			emailError.innerHTML = "Please enter your email address";
+			emailOk = false;
+		}else if(!/^([A-Za-z]+\d+|[A-Za-z]+)@[a-z]+\.(com|[a-z]{2,3}\.[a-z]{2})$/.test(email.value)){
+            emailError.innerHTML = "Please enter a valid email address";
+        }
+        else{
+			emailError.innerHTML = "";
+			emailOk = true;
+		}
+	});
+	
+	function numOfTypeChange(){
+		if(numOfType.value == "1"){
+			item1.disabled = false;
+			q1.disabled = false;
+			item2.disabled = true;
+			q2.disabled = true;
+			item3.disabled = true;
+			q3.disabled = true;
+			item2Ok = true;
+			item3Ok = true;
+		}else if(numOfType.value == "2"){
+			item1.disabled = false;
+			q1.disabled = false;
+			item2.disabled = false;
+			q2.disabled = false;
+			q2.value = "1";
+			item3.disabled = true;
+			q3.disabled = true;
+			item2Ok = false;
+			item3Ok = true;
+		}else{
+			item1.disabled = false;
+			q1.disabled = false;
+			item2.disabled = false;
+			q2.disabled = false;
+			q2.value = "1";
+			item3.disabled = false;
+			q3.disabled = false;
+			q3.value = "1";
+			item2Ok = false;
+			item3Ok = false;
+		}
+		promo.disabled = true;
+		promobutton.disabled = true;
+	}
+	
+	item1.addEventListener("keyup", ()=>{
+		if(item1.value.trim() == ""){
+			item1Error.innerHTML = "Please enter the item code";
+			item1Ok = false;
+			promo.disabled = true;
+			promobutton.disabled = true;
+		}else if(!/^(CK|RT|MC|MK)00[1-4]$/.test(item1.value.trim())){
+			item1Error.innerHTML = "Please enter a valid item code";
+			item1Ok = false;
+			promo.disabled = true;
+			promobutton.disabled = true;
+		}else{
+			item1Error.innerHTML = "";
+			item1Ok = true;
+			if(item2Ok && item3Ok){
+				promo.disabled = false;
+				promobutton.disabled = false;
+			}
+		}
+		displaySummary(item1.value, item2.value , item3.value);
+	});
+	q1.addEventListener("change", ()=>{
+		displaySummary(item1.value, item2.value , item3.value);
+	});
+	
+	item2.addEventListener("keyup", ()=>{
+		item2Ok = false;
+		if(item2.value.trim() == "" || /^(CK|RT|MC|MK)00[1-4]$/.test(item2.value)){
+			item2Error.innerHTML = "";
+			item2Ok = true;
+			if(item1Ok && item3Ok){
+				promo.disabled = false;
+				promobutton.disabled = false;
+			}
+		}else{
+			item2Error.innerHTML = "Please enter a valid item code";
+			item2Ok = false;
+			promo.disabled = true;
+			promobutton.disabled = true;
+		}
+		displaySummary(item1.value, item2.value , item3.value);
+	});
+	q2.addEventListener("change", ()=>{
+		displaySummary(item1.value, item2.value , item3.value);
+	});
+	item3.addEventListener("keyup", ()=>{
+		item3Ok = false;
+		if(item3.value.trim() == "" || /^(CK|RT|MC|MK)00[1-4]$/.test(item3.value)){
+			item3Error.innerHTML = "";
+			item3Ok = true;
+			if(item1Ok && item2Ok){
+				promo.disabled = false;
+				promobutton.disabled = false;
+			}
+		}else{
+			item3Error.innerHTML = "Please enter a valid item code";
+			item3Ok = false;
+			promo.disabled = true;
+			promobutton.disabled = true;
+		}
+		displaySummary(item1.value, item2.value, item3.value);
+		
+	});
+	q3.addEventListener("change", ()=>{
+		displaySummary(item1.value, item2.value, item3.value);
+	});
+	
+	
+	additional.addEventListener("keyup", ()=>{
+		displaySummary(item1.value, item2.value , item3.value);
+	});
+	
+	
+	promobutton.addEventListener("click", ()=>{
+		for (let i = 0; i < promo_codes.length; i++){
+			if (promo.value.toUpperCase() != promo_codes[i]){
+				promoError.innerHTML = "Please enter a valid promo code";
+			}
+			else{
+				promoError.innerHTML = "The promo code is valid";
+                i = promo_codes.length;
+			}
+		}
+	});
+	
+	
+	checkOut.addEventListener("click", (event)=>{
+		event.preventDefault();
+		if(nameOk && contactOk && addressOk && postalOk && emailOk && item1Ok && item2Ok && item3Ok && promoOk){
+			window.location.href = "success.html";
+		}
+	});
+
+	function displaySummary(i1, i2, i3){
+		for(let i = 0; i < food_codes.length; i++){
+			if(i1 == food_codes[i]){
+				foodName1 = foods[i]["name"];
+				foodCode1 = foods[i]["code"];
+				foodPrice1 = foods[i]["price"];
+			}
+		}
+		for(let j = 0; j < food_codes.length; j++){
+			if(i2 == food_codes[j]){
+				foodName2 = foods[j]["name"];
+				foodCode2 = foods[j]["code"];
+				foodPrice2 = foods[j]["price"];
+			}
+		}
+		for(let k = 0; k < food_codes.length; k++){
+			if(i3 == food_codes[k]){
+				foodName3 = foods[k]["name"];
+				foodCode3 = foods[k]["code"];
+				foodPrice3 = foods[k]["price"];
+			}
+		}
+		
+		var summaryString = "Name: " + names.value + "\nContact No: " + contact.value + 
+							"\nAddress: " + address.value + "\nPostal: " + postal.value + "\nEmail: " + email.value +
+							"\n\n" +
+							"\n1)Item 1: " + foodCode1 + "\n- Name: " + foodName1 + "\n- Price: " + foodPrice1+ "\n- Quantity: " + q1.value +
+							"\n2)Item 2: " + foodCode2 + "\n- Name: " + foodName2 + "\n- Price: " + foodPrice2+ "\n- Quantity: " + q2.value +
+							"\n3)Item 3: " + foodCode3 + "\n- Name: " + foodName3 + "\n- Price: " + foodPrice3+ "\n- Quantity: " + q3.value +
+							"\n" +
+							"\nTotal: $" + (foodPrice1*q1.value + foodPrice2*q2.value + foodPrice3*q3.value)+
+							"\n\n\n"+
+							"\nAdditional Information:\n" + additional.value;
+		document.getElementById("summary").value = summaryString;
+	}
+	
+	function defaultLoad(){
+		nameOk = false;
+		contactOk = false;
+		addressOk = false;
+		postalOk = false;
+		emailOk = false;
+		item1Ok = false;
+		item2Ok = true;
+		item3Ok = true;
+		promoOk = true;
+		
+		names.value = "";
+		nameError.innerHTML = "";
+		contact.value = "";
+		contactError.innerHTML = "";
+		address.value = "";
+		addressError.innerHTML = "";
+		postal.value = "";
+		postalError.innerHTML = "";
+		email.value = "";
+		emailError.innerHTML = "";
+		selectedNum.selected = true;
+		item1.value = "";
+		q1.value = "1";
+		item1Error.innerHTML = "";
+		item2.value = "";
+		item2.disabled = true;
+		q2.value = "";
+		q2.disabled = true;
+		item2Error.innerHTML = "";
+		item3.value = "";
+		item3.disabled = true;
+		q3.value = "";
+		q3.disabled = true;
+		item3Error.innerHTML = "";
+		additional.value = "";
+		summary.value = "";
+		promo.value = "";
+		promoError.innerHTML = "";
+		promo.disabled = true;
+		promobutton.disabled = true;
+		
+		var foodName1 = "";
+		var foodCode1 = "";
+		var foodPrice1 = 0;
+		var foodName2 = "";
+		var foodCode2 = "";
+		var foodPrice2 = 0;
+		var foodName3 = "";
+		var foodCode3 = "";
+		var foodPrice3 = 0;
+		for(let i = 0; i < food_codes.length; i++){
+			if(item1.value == food_codes[i]){
+				foodName1 = foods[i]["name"];
+				foodCode1 = foods[i]["code"];
+				foodPrice1 = foods[i]["price"];
+			}
+		}
+		for(let j = 0; j < food_codes.length; j++){
+			if(item2.value == food_codes[j]){
+				foodName2 = foods[j]["name"];
+				foodCode2 = foods[j]["code"];
+				foodPrice2 = foods[j]["price"];
+			}
+		}
+		for(let k = 0; k < food_codes.length; k++){
+			if(item3.value == food_codes[k]){
+				foodName3 = foods[k]["name"];
+				foodCode3 = foods[k]["code"];
+				foodPrice3 = foods[k]["price"];
+			}
+		}
+	}
+	
+	clearForm.addEventListener("click", ()=>{
+		defaultLoad();
+	});
+    </script>
+</body>
+</html>
